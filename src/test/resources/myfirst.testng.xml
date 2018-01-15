@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite verbose="0" name="Selenium Testing">    
+  <test name="My First Instrument" preserve-order="true" enabled="true">
+  <parameter name="pid" value="129" />
+  <parameter name="project_title" value="Selenium Testing" />
+  <parameter name="orig_record" value="1" />
+  <parameter name="event_id" value="953" />                       
+  <parameter name="form_name" value="My First Instrument" />
+  <parameter name="rec_var_name" value="record_id" />
+    <classes>
+      <class name="MyFirstInstrumentTest">
+        <methods>
+          <include name="verifyLandingPage" />
+          <include name="verifyLogin" />
+          <include name="verifyProjectPage" />
+          <include name="verifyAddNewRecord" />
+          <include name="verifyDataEntry" /> 
+          <include name="verifyLogEntry" />
+        </methods>
+      </class>
+    </classes>
+  </test>
+</suite>
