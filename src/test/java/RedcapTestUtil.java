@@ -85,7 +85,6 @@ public class RedcapTestUtil {
     //Note that geckodriver is only needed with recent versions of Firefox
     System.setProperty("webdriver.gecko.driver",GECKO_DRIVER_LOC);
     //Reduce the verbosity of Firefox logging to the console
-    //System.setProperty(FirefoxDriver.SystemProperty.DRIVER_USE_MARIONETTE,"true");
     System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,"/dev/null");
 
   	driver = new FirefoxDriver();
