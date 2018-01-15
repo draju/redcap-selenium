@@ -1,4 +1,4 @@
-package com.github.draju.selrc;
+package com.github.draju.rcsel;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -34,7 +34,7 @@ public class RedcapTestUtil {
    * These messages are meant to track down errors only.
    * Informative messages on test progress should be in the test class itself.
    */ 
-  public static int DEBUG = 1;  
+  public static int DEBUG = 0;  
 
   //Update the following constants to match your test environment
   public static final String BASE_URL = "https://localhost/redcap";   
