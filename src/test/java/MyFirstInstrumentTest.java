@@ -1,4 +1,4 @@
-import com.github.draju.selrc.RedcapTestUtil;
+import com.github.draju.rcsel.RedcapTestUtil;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
