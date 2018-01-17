@@ -134,17 +134,6 @@ public class RedcapTestUtil {
   }
 
   /**
-   * Loads the specified REDCap Project Setup page
-   *
-   * @param pid REDCap project ID
-   */
-  public static void loadProjectPage(int pid){
-    String projectUrl = BASE_URL + "/" + REDCAP_VERSION + "/ProjectSetup/index.php?pid=" + pid;
-    driver.get(projectUrl);
-  }
-
-
-  /**
    * Shortcut function to create a new record and open the first data entry form.
    * Clicks on the "Add / Edit Records" link and the "Add New Record" button in succession.
    * Includes wait time to allow each respective page to load.

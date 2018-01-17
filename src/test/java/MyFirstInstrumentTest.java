@@ -90,7 +90,7 @@ public class MyFirstInstrumentTest {
 
     System.out.println("----------- Executing verifyProjectPage");
 
-    RedcapTestUtil.loadProjectPage(pid);
+    RedcapTestUtil.clickOnLink(project_title);
     //Wait if necessary for project page to load
     new WebDriverWait(driver, 5).until(ExpectedConditions.urlContains(RedcapTestUtil.REDCAP_VERSION+"/ProjectSetup/index.php?pid="+pid));    
     String actualTitle = driver.getTitle();
