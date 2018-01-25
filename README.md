@@ -22,10 +22,14 @@ Setup Instructions
 
 6. If you are testing on a recent version of Firefox, install [geckodriver](https://github.com/mozilla/geckodriver/releases) and update GECKO_DRIVER_LOC in RedcapTestUtil.java.  If you are testing on another browser, update the loadRedcap() function accordingly.
 
-7. Create an example project in REDCap with a 'My First Instrument' form and enter a test record.
+7. Create an example project in REDCap with a 'My First Instrument' form and enter a test record manually.
 
 8. Update myfirst.testng.xml with parameters for the test record you entered above.
 
-9. Go to the directory where pom.xml is located.  Run the tests defined in MyFirstInstrumentTest.java by typing: mvn clean test.
+9. Go to the directory where pom.xml is located.  Run the tests defined in MyFirstInstrumentTest.java by typing:
+
+mvn clean test  
+
+If the code is working, a browser will open, log into REDCap, navigate to your 'My First Instrument' form and enter a new record with the same information you previously entered in Step #7.
 
 10. View the HTML output in the target/surefire-reports directory.
