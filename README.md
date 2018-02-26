@@ -18,11 +18,11 @@ Setup Instructions
 5. Update the constants in RedcapTestUtil.java to reflect your environment (REDCAP_URL, REDCAP_VERSION, DB_USER, DB_PASS, etc...)
 
     + I recommend creating a new REDCap account/password on your test instance to avoid accidentally connecting to your production server or exposing your password.
-    + This library was built using REDCap v6.16.3.  Your version may have UI differences - HTML/CSS attributes of page elements may be different.  If your tests fail to find specific page elements, you will need to update the relevant places in the code to match your REDCap version.  I intend to update this library to work with REDCap v8.x by spring of 2018.
+    + Each release of this library was tested against a particular version of REDCap, so please check the Releases tab when deciding which version to download.  Your REDCap version may have UI differences from those tested here - HTML/CSS attributes of page elements may be different.  If your tests fail to find specific page elements, you will need to update the relevant places in the code to better match your REDCap version.
 
 6. If you are testing on a recent version of Firefox, install [geckodriver](https://github.com/mozilla/geckodriver/releases) and update GECKO_DRIVER_LOC in RedcapTestUtil.java.  If you are testing on another browser, update the loadRedcap() function accordingly.
 
-7. Create an example project in REDCap with a 'My First Instrument' form and enter a test record manually.
+7. Create an example project in REDCap with a 'My First Instrument' data entry form and enter a test record manually.
 
 8. Update myfirst.testng.xml with parameters for the test record you entered above.
 

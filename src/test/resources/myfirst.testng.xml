@@ -2,10 +2,10 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite verbose="0" name="Selenium Testing">    
   <test name="My First Instrument" preserve-order="true" enabled="true">
-  <parameter name="pid" value="129" />
+  <parameter name="pid" value="132" />
   <parameter name="project_title" value="Selenium Testing" />
   <parameter name="orig_record" value="1" />
-  <parameter name="event_id" value="953" />                       
+  <parameter name="event_id" value="956" />                       
   <parameter name="form_name" value="My First Instrument" />
   <parameter name="rec_var_name" value="record_id" />
     <classes>

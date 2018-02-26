@@ -5,7 +5,7 @@
         <modelVersion>4.0.0</modelVersion>
         <groupId>rcsel</groupId>
         <artifactId>rcsel</artifactId>
-        <version>1.0</version>
+        <version>2.0</version>
         <dependencies>
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>

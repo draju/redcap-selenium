@@ -74,11 +74,14 @@ public class MyFirstInstrumentTest {
 
     RedcapTestUtil.loginRedcap();
     
-    //If login worked, you should see a 'Log out' link
-    WebElement logOutLink = null;
-    logOutLink = new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.linkText("Log out")));
-    Assert.assertNotNull(logOutLink);
+    //If login worked, should see "Logged in as username"
+    String expectedLoggedInUser = RedcapTestUtil.DEFAULT_REDCAP_USER;
+    String loggedInUser = "";
+    WebElement element = new WebDriverWait(driver, 5).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("li.loggedInUsername b")));
+    loggedInUser = element.getText();
+    System.out.println("Logged in string as: "+loggedInUser);
 
+    Assert.assertEquals(loggedInUser,expectedLoggedInUser);    
   }
 
   /**
@@ -125,7 +128,7 @@ public class MyFirstInstrumentTest {
 
     System.out.println("----------- Executing verifyDataEntry");
 
-    newRecNum = RedcapTestUtil.enterForm(pid,orig_record,event_id,rec_var_name);
+    newRecNum = RedcapTestUtil.enterForm(pid,orig_record,event_id,rec_var_name,"submit-btn-saverecord");
     deTimeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
     if(newRecNum > 0){
       System.out.println("Form '"+form_name+"' entered for Record #"+newRecNum+" at "+deTimeStamp);

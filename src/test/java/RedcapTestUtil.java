@@ -38,7 +38,7 @@ public class RedcapTestUtil {
 
   //Update the following constants to match your test environment
   public static final String BASE_URL = "https://localhost/redcap";   
-  public static final String REDCAP_VERSION = "redcap_v6.16.3";     
+  public static final String REDCAP_VERSION = "redcap_v8.2.1";     
   public static final String DB_USER = "root";                  
   public static final String DB_PASS = "*******";
   public static final String DEFAULT_REDCAP_USER = "draju";
@@ -201,6 +201,33 @@ public static void selectFormFromSidebar(String formName){
 }
 
 /**
+ * Select and click on a particular save button from the dropdown at the bottom of a data entry form
+ *
+ * @param buttonID id attribute of the button to click
+ */
+public static void selectSaveButtonDropdown(String buttonID){
+
+  //Sometimes the save button is elevated from the dropdown choices to the top-level button itself
+  //So check the primary button before looking through the dropdown choices
+  String primaryButtonCSS = "button#"+buttonID;
+  //There would only be one primary button, but use findElements so no exception is thrown if not found
+  List<WebElement> primaryButtons = driver.findElements(By.cssSelector(primaryButtonCSS));
+  if(primaryButtons.size() > 0){
+    primaryButtons.get(0).click();
+  }
+  else {
+    //First click the downward arrow to display the links
+    WebElement element = new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(By.id("submit-btn-dropdown"))); 
+    element.click();
+
+    //Click on the dropdown link
+    String linkID = "a#"+buttonID;
+    element = new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.cssSelector(linkID)));
+    element.click(); 
+  }
+}
+
+/**
  * Loads REDCap data into memory for a particular combination of project ID, record ID and event ID
  *
  * @param origPID REDCap project ID 
@@ -260,9 +287,10 @@ public static void selectFormFromSidebar(String formName){
    * @param origRecord REDCap record ID of original record
    * @param origEventID REDCap event ID of original record
    * @param recVarName variable that holds the participant ID number, e.g. 'record_id'
+   * @param saveButtonID identifies which save button to click at the bottom of the data entry form
    * @return the record ID for the form that was just entered or -1 on error
    */
-  public static int enterForm(int origPID, int origRecord, int origEventID, String recVarName){
+  public static int enterForm(int origPID, int origRecord, int origEventID, String recVarName, String saveButtonID){
 
     //Load data from a previously entered record into memory so you can re-enter it in the current form
   	getOriginalRecord(origPID,origRecord,origEventID);
@@ -337,13 +365,7 @@ public static void selectFormFromSidebar(String formName){
         //Need to strip off the __chkn__ in checkbox field name before doing the DB lookup
         else if(inputType.equals("checkbox")){
           lookupName = inputName.replace("__chkn__","");  
-        }
-        //If you've reached a Save Record button at the end of the form, click it and quit
-        else if(inputName.equals("submit-btn-saverecord") || inputName.equals("submit-btn-savenextform")){
-          inputField.click();
-          waitAndHandlePopup(driver,"div.ui-dialog-buttonset button.ui-button","Ignore and leave record");
-          return recNum;
-        }                                 
+        }                                
         else{
           lookupName = inputName;
         }
@@ -382,6 +404,32 @@ public static void selectFormFromSidebar(String formName){
           } // end loop over values associated with this variable name 
         } // values != null for field name
       } // end loop over input tags
+
+      //See if there is a save button in this cell, indicating that you are at the end of the form
+      //If one of the save button dropdown options is used, click the dropdown.
+      //Otherwise, look for the 'Save and Exit Record' button outside the dropdown
+      if(!saveButtonID.equals("submit-btn-saverecord")){ 
+        //There should only be one dropdown per form, but use findElements since it doesn't throw an exception if not found in this cell
+        List<WebElement> saveButtonDropdowns = cell.findElements(By.cssSelector("button#submit-btn-dropdown"));        
+        for(WebElement saveButtonDropdown : saveButtonDropdowns){
+          selectSaveButtonDropdown(saveButtonID);
+          waitAndHandlePopup(driver,"div.ui-dialog-buttonset button.ui-button","Ignore and leave record");
+          return recNum;          
+        }
+      }
+      else {
+        //Click 'Save and Exit Form'
+        List<WebElement> formButtons = cell.findElements(By.tagName("button"));
+        String buttonID;
+        for(WebElement formButton : formButtons){
+          buttonID = formButton.getAttribute("id");
+          if(formButton.isDisplayed() && buttonID.equals("submit-btn-saverecord")){
+            formButton.click();
+            waitAndHandlePopup(driver,"div.ui-dialog-buttonset button.ui-button","Ignore and leave record");
+            return recNum;
+          }
+        }
+      }
   } // end loop over td.data cells
 
   return recNum;
